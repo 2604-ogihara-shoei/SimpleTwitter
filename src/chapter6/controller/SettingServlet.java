@@ -22,7 +22,6 @@ import chapter6.service.UserService;
 @WebServlet(urlPatterns = { "/setting" })
 public class SettingServlet extends HttpServlet {
 
-
 	/**
 	* ロガーインスタンスの生成
 	*/
@@ -84,6 +83,7 @@ public class SettingServlet extends HttpServlet {
 			session.setAttribute("loginUser", user);
 			response.sendRedirect("./");
 		}
+
 
 	private User getUser(HttpServletRequest request) throws IOException, ServletException {
 
