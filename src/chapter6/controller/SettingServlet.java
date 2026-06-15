@@ -26,19 +26,19 @@ public class SettingServlet extends HttpServlet {
 	/**
 	* ロガーインスタンスの生成
 	*/
-    Logger log = Logger.getLogger("twitter");
+	Logger log = Logger.getLogger("twitter");
 
-    /**
-    * デフォルトコンストラクタ
-    * アプリケーションの初期化を実施する。
-    */
+	/**
+	* デフォルトコンストラクタ
+	* アプリケーションの初期化を実施する。
+	*/
     public SettingServlet() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 
 			log.info(new Object(){}.getClass().getEnclosingClass().getName() +
@@ -58,7 +58,7 @@ public class SettingServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 
-		  	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+			log.info(new Object(){}.getClass().getEnclosingClass().getName() +
   			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 			HttpSession session = request.getSession();
@@ -85,10 +85,10 @@ public class SettingServlet extends HttpServlet {
 			response.sendRedirect("./");
 		}
 
-    private User getUser(HttpServletRequest request) throws IOException, ServletException {
+	private User getUser(HttpServletRequest request) throws IOException, ServletException {
 
     	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		User user = new User();
 		user.setId(Integer.parseInt(request.getParameter("id")));
@@ -98,9 +98,10 @@ public class SettingServlet extends HttpServlet {
 		user.setEmail(request.getParameter("email"));
 		user.setDescription(request.getParameter("description"));
 		return user;
-    }
+	}
 
-    private boolean isValid(User user, List<String> errorMessages) {
+
+	private boolean isValid(User user, List<String> errorMessages) {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -110,21 +111,21 @@ public class SettingServlet extends HttpServlet {
 		String email = user.getEmail();
 
 		if (!StringUtils.isEmpty(name) && (20 < name.length())) {
-		    errorMessages.add("名前は20文字以下で入力してください");
+			errorMessages.add("名前は20文字以下で入力してください");
 		}
 		if (StringUtils.isEmpty(account)) {
-		    errorMessages.add("アカウント名を入力してください");
+			errorMessages.add("アカウント名を入力してください");
 		} else if (20 < account.length()) {
-		    errorMessages.add("アカウント名は20文字以下で入力してください");
+			errorMessages.add("アカウント名は20文字以下で入力してください");
 		}
 		if (StringUtils.isEmpty(email)) {
 			errorMessages.add("メールアドレスを入力してください");
 		} else if (!StringUtils.isEmpty(email) && (50 < email.length())) {
-		    errorMessages.add("メールアドレスは50文字以下で入力してください");
+			errorMessages.add("メールアドレスは50文字以下で入力してください");
 		}
 		if (errorMessages.size() != 0) {
-		    return false;
+			return false;
 		}
 		return true;
-    }
+	}
 }

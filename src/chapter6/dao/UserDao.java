@@ -20,15 +20,15 @@ import chapter6.logging.InitApplication;
 
 public class UserDao {
 
-    /**
-    * ロガーインスタンスの生成
-    */
-    Logger log = Logger.getLogger("twitter");
-    /**
-    * デフォルトコンストラクタ
-    * アプリケーションの初期化を実施する。
-    */
-    public UserDao(){
+	/**
+	* ロガーインスタンスの生成
+	*/
+	Logger log = Logger.getLogger("twitter");
+	/**
+	* デフォルトコンストラクタ
+	* アプリケーションの初期化を実施する。
+	*/
+	public UserDao(){
 		InitApplication application = InitApplication.getInstance();
 		application.init();
     }
@@ -168,9 +168,9 @@ public class UserDao {
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
 			throw new SQLRuntimeException(e);
     	} finally {
-    		close(ps);
-    	}
-    }
+	    		close(ps);
+	    	}
+	}
 
 
     public void update(Connection connection, User user) {
@@ -216,5 +216,5 @@ public class UserDao {
 		} finally {
 			close(ps);
 		}
-    }
+	}
 }

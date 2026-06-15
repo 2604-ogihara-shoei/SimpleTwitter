@@ -46,18 +46,18 @@ public class UserService {
 			commit(connection);
 
 			return user;
-    	} catch (RuntimeException e) {
-    		rollback(connection);
-    		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-    		throw e;
-    	} catch (Error e) {
-    		rollback(connection);
-    		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-    		throw e;
-    	} finally {
-    		close(connection);
-    	}
-    }
+		} catch (RuntimeException e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+				throw e;
+			} finally {
+				close(connection);
+			}
+		}
 
 
     public void insert(User user) {
@@ -140,5 +140,5 @@ public class UserService {
 		} finally {
 			close(connection);
 		}
-    }
+	}
 }
