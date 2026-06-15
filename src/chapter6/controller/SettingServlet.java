@@ -50,7 +50,7 @@ public class SettingServlet extends HttpServlet {
 
 			request.setAttribute("user", user);
 			request.getRequestDispatcher("setting.jsp").forward(request, response);
-			}
+		}
 
 
 	@Override

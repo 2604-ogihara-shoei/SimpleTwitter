@@ -168,8 +168,8 @@ public class UserDao {
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
 			throw new SQLRuntimeException(e);
     	} finally {
-	    		close(ps);
-	    	}
+			close(ps);
+		}
 	}
 
 
