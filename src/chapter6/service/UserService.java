@@ -53,11 +53,11 @@ public class UserService {
 		} catch (Error e) {
 			rollback(connection);
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-				throw e;
-			} finally {
-				close(connection);
-			}
+			throw e;
+		} finally {
+			close(connection);
 		}
+	}
 
 
     public void insert(User user) {
