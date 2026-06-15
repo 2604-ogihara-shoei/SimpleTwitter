@@ -38,51 +38,51 @@ public class SettingServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+	throws ServletException, IOException {
 
-			log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-			HttpSession session = request.getSession();
-			User loginUser = (User) session.getAttribute("loginUser");
+		HttpSession session = request.getSession();
+		User loginUser = (User) session.getAttribute("loginUser");
 
-			User user = new UserService().select(loginUser.getId());
+		User user = new UserService().select(loginUser.getId());
 
-			request.setAttribute("user", user);
-			request.getRequestDispatcher("setting.jsp").forward(request, response);
-		}
+		request.setAttribute("user", user);
+		request.getRequestDispatcher("setting.jsp").forward(request, response);
+	}
 
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+	throws ServletException, IOException {
 
-			log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-  			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-			HttpSession session = request.getSession();
-			List<String> errorMessages = new ArrayList<String>();
+		HttpSession session = request.getSession();
+		List<String> errorMessages = new ArrayList<String>();
 
-			User user = getUser(request);
-			if (isValid(user, errorMessages)) {
-				try {
-					new UserService().update(user);
-				} catch (NoRowsUpdatedRuntimeException e) {
-					log.warning("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
-					errorMessages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
-				}
+		User user = getUser(request);
+		if (isValid(user, errorMessages)) {
+			try {
+				new UserService().update(user);
+			} catch (NoRowsUpdatedRuntimeException e) {
+				log.warning("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
+				errorMessages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
 			}
-
-			if (errorMessages.size() != 0) {
-				request.setAttribute("errorMessages", errorMessages);
-				request.setAttribute("user", user);
-				request.getRequestDispatcher("setting.jsp").forward(request, response);
-				return;
-			}
-
-			session.setAttribute("loginUser", user);
-			response.sendRedirect("./");
 		}
+
+		if (errorMessages.size() != 0) {
+			request.setAttribute("errorMessages", errorMessages);
+			request.setAttribute("user", user);
+			request.getRequestDispatcher("setting.jsp").forward(request, response);
+			return;
+		}
+
+		session.setAttribute("loginUser", user);
+		response.sendRedirect("./");
+	}
 
 
 	private User getUser(HttpServletRequest request) throws IOException, ServletException {
