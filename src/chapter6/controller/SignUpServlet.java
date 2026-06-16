@@ -98,6 +98,11 @@ public class SignUpServlet extends HttpServlet {
             errorMessages.add("アカウント名は20文字以下で入力してください");
         }
 
+        User existUser = new UserService().select(account);
+        if (existUser != null) {
+        	errorMessages.add("すでに存在するアカウントです");
+        }
+
         if (StringUtils.isEmpty(password)) {
             errorMessages.add("パスワードを入力してください");
         }
