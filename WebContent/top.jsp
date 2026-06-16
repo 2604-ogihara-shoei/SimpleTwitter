@@ -72,7 +72,7 @@
 	        <div class="message">
 	            <div class="account-name">
 	                <span class="account">
-                		<a href="./?user_id=<c:out value="${message.userId}"/> ">
+                		<a href="./?user_id=<c:out value="${message.userId}"/>">
 	                		<c:out value="${message.account}" />
                 		</a>
                 	</span>
@@ -88,8 +88,11 @@
 				<div class="date">
 					<fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
 				</div>
-
-	        </div>
+				<form action="deleteMessage" method="post">
+					<input type="hidden" name="id" value="${message.id}">
+					<input type="submit" value="削除">
+				</form>
+			</div>
 	    </c:forEach>
 	</div>
 
