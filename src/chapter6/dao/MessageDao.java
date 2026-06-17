@@ -76,9 +76,7 @@ public class MessageDao {
 			sql.append("DELETE FROM messages WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());
-
 			ps.setInt(1, id.getId());
-
 			ps.executeUpdate();
         } catch (SQLException e) {
 		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
