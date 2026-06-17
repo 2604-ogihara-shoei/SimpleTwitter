@@ -15,7 +15,6 @@ import chapter6.service.MessageService;
 @WebServlet(urlPatterns = { "/deleteMessage" })
 public class DeleteMessageServlet extends HttpServlet {
 
-
     /**
     * ロガーインスタンスの生成
     */

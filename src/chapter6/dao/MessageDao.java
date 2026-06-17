@@ -85,4 +85,52 @@ public class MessageDao {
             close(ps);
         }
     }
+
+
+    public void select(Connection connection, Message message) {
+
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT * FROM messages WHERE id = ?;");
+
+			ps = connection.prepareStatement(sql.toString());
+			ps.setString(1, message.getText());
+			ps.executeUpdate();
+        } catch (SQLException e) {
+		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+            throw new SQLRuntimeException(e);
+        } finally {
+            close(ps);
+        }
+    }
+
+
+    public void update(Connection connection, Message message) {
+
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE messages SET ");
+			sql.append("    text = ?, ");
+			sql.append("    updated_date = CURRENT_TIMESTAMP ");
+			sql.append("WHERE id = ?");
+
+			ps = connection.prepareStatement(sql.toString());
+			ps.setString(1, message.getText());
+			ps.setInt(2,message.getId());
+			ps.executeUpdate();
+        } catch (SQLException e) {
+		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+            throw new SQLRuntimeException(e);
+        } finally {
+            close(ps);
+        }
+    }
 }

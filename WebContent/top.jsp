@@ -88,10 +88,16 @@
 				<div class="date">
 					<fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
 				</div>
-				<form action="deleteMessage" method="post">
-					<input type="hidden" name="id" value="${message.id}">
-					<input type="submit" value="削除">
-				</form>
+				<c:if test="${ not empty loginUser }">
+					<form action="deleteMessage" method="post">
+						<input type="hidden" name="id" value="${message.id}">
+						<input type="submit" value="削除">
+					</form>
+					<form action="edit" method="post">
+						<input type="hidden" name="messageId" value="${message.id}">
+						<input type="submit" value="編集">
+					</form>
+				</c:if>
 			</div>
 	    </c:forEach>
 	</div>
