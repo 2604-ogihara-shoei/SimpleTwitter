@@ -135,7 +135,6 @@ public class MessageService {
 		try {
 			connection = getConnection();
 			Message message = new MessageDao().select(connection, id);
-			message.setId(id);
 			commit(connection);
 			return message;
 		} catch (RuntimeException e) {
