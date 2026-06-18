@@ -22,7 +22,7 @@
 		<div class="form-area">
 			<form action="edit" method="post">
             	<textarea name="text" cols="100" rows="5" class="tweet-box">${message.text }</textarea>
-				<input type="hidden" name="messageId" id="messageId" value="${message.id}"><br />
+				<input type="hidden" name="messageId" value="${message.id}"><br />
             	<input type="submit" value="更新">（140文字まで）
 			</form>
 		</div>

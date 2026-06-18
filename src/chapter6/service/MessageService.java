@@ -126,7 +126,7 @@ public class MessageService {
 	}
 
 
-	public void select(int id) {
+	public Message select(int id) {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -134,10 +134,10 @@ public class MessageService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			Message message = new Message();
+			Message message = new MessageDao().select(connection, id);
 			message.setId(id);
-			new MessageDao().select(connection, message);
 			commit(connection);
+			return message;
 		} catch (RuntimeException e) {
 			rollback(connection);
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
