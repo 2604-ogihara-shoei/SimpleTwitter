@@ -47,8 +47,6 @@
 		<c:remove var="errorMessages" scope="session" />
 	</c:if>
 
-
-
 	<div>
 		<div class="form-area">
 			<form action="edit" method="post">

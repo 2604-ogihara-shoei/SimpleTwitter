@@ -135,7 +135,7 @@ public class MessageDao {
 
 			ps = connection.prepareStatement(sql.toString());
 			ps.setString(1, message.getText());
-			ps.setInt(2,message.getId());
+			ps.setInt(2, message.getId());
 			ps.executeUpdate();
         } catch (SQLException e) {
 		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
