@@ -17,7 +17,6 @@ import chapter6.logging.InitApplication;
 
 public class MessageDao {
 
-
     /**
     * ロガーインスタンスの生成
     */
@@ -30,7 +29,6 @@ public class MessageDao {
     public MessageDao() {
         InitApplication application = InitApplication.getInstance();
         application.init();
-
     }
 
     public void insert(Connection connection, Message message) {
