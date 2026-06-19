@@ -91,7 +91,7 @@ public class EditServlet extends HttpServlet {
 		return;
         }
 
-		new MessageService().update(id, text);
+		new MessageService().update(message);
 		response.sendRedirect("./");
     }
 

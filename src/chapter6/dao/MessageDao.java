@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,7 +68,7 @@ public class MessageDao {
     }
 
 
-    public void delete(Connection connection, Message id) {
+    public void delete(Connection connection, int id) {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -77,7 +79,7 @@ public class MessageDao {
 			sql.append("DELETE FROM messages WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());
-			ps.setInt(1, id.getId());
+			ps.setInt(1, id);
 			ps.executeUpdate();
         } catch (SQLException e) {
         	log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
@@ -95,28 +97,51 @@ public class MessageDao {
 
 		PreparedStatement ps = null;
 		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT * FROM messages WHERE id = ?;");
+			String sql = "SELECT * FROM messages WHERE id = ?";
 
-			ps = connection.prepareStatement(sql.toString());
+			ps = connection.prepareStatement(sql);
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 
-			if (rs.next()) {
-				Message message = new Message();
-				message.setId(rs.getInt("id"));
-				message.setText(rs.getString("text"));
-				return message;
+			List<Message> messages = toMessages(rs);
+			if (messages.isEmpty()) {
+			    return null;
+			} else if (2 <= messages.size()) {
+				log.log(Level.SEVERE, "メッセージが重複しています", new IllegalStateException());
+			    throw new IllegalStateException("メッセージが重複しています");
+			} else {
+			    return messages.get(0);
 			}
-
-			return null;
-
         } catch (SQLException e) {
-		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-            throw new SQLRuntimeException(e);
+        	log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+        	throw new SQLRuntimeException(e);
         } finally {
             close(ps);
         }
+    }
+
+
+    private List<Message> toMessages(ResultSet rs) throws SQLException {
+
+    	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+		List<Message> messages = new ArrayList<Message>();
+		try {
+			while (rs.next()) {
+				Message message = new Message();
+				message.setId(rs.getInt("id"));
+				message.setUserId(rs.getInt("user_Id"));
+				message.setText(rs.getString("text"));
+				message.setCreatedDate(rs.getTimestamp("created_date"));
+				message.setUpdatedDate(rs.getTimestamp("updated_date"));
+
+				messages.add(message);
+			}
+			return messages;
+		} finally {
+			close(rs);
+		}
     }
 
 
