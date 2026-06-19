@@ -106,9 +106,6 @@ public class MessageDao {
 			List<Message> messages = toMessages(rs);
 			if (messages.isEmpty()) {
 			    return null;
-			} else if (2 <= messages.size()) {
-				log.log(Level.SEVERE, "メッセージが重複しています", new IllegalStateException());
-			    throw new IllegalStateException("メッセージが重複しています");
 			} else {
 			    return messages.get(0);
 			}

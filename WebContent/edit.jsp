@@ -11,9 +11,9 @@
 </head>
 <body>
 	<div class="header">
-			<a href="./">ホーム</a>
-			<a href="setting">設定</a>
-			<a href="logout">ログアウト</a>
+		<a href="./">ホーム</a>
+		<a href="setting">設定</a>
+		<a href="logout">ログアウト</a>
 	</div>
 
 	<c:if test="${ not empty loginUser }">
