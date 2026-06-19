@@ -92,7 +92,7 @@
 					<c:if test="${comment.messageId == message.id}">
 						<div style="margin-left:30px;">${comment.name} @${comment.account}
 						<br />
-						${comment.text}
+						<pre>${comment.text}</pre>
 						</div>
 					</c:if>
 				</c:forEach>
