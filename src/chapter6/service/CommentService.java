@@ -60,11 +60,11 @@ public class CommentService {
 		try {
 			connection = getConnection();
 
-			List<UserComment> comment = new UserCommentDao().select(connection, LIMIT_NUM);
+			List<UserComment> comments = new UserCommentDao().select(connection, LIMIT_NUM);
 
 			commit(connection);
 
-			return comment;
+			return comments;
 
 		} finally {
 			close(connection);
