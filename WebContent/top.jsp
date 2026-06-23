@@ -16,7 +16,6 @@
 		<c:if test="${ empty loginUser }">
 			<a href="login">ログイン</a>
 			<a href="signup">登録する</a>
-			<c:remove var="errorMessages" scope="session" />
 		</c:if>
 
 		<c:if test="${ not empty loginUser }">
