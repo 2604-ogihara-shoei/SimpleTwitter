@@ -16,6 +16,7 @@
 		<c:if test="${ empty loginUser }">
 			<a href="login">ログイン</a>
 			<a href="signup">登録する</a>
+			<c:remove var="errorMessages" scope="session" />
 		</c:if>
 
 		<c:if test="${ not empty loginUser }">
@@ -57,10 +58,10 @@
 	</c:if>
 
 	<form action="./" method="get">
-	日付:
-	<input type="date" name="start" value="${start}">～
-	<input type="date" name="end" value="${end}">
-	<input type="submit" value="絞り込み">
+		日付:
+		<input type="date" name="start" value="${start}">～
+		<input type="date" name="end" value="${end}">
+		<input type="submit" value="絞り込み">
 	</form>
 
 	<div class="form-area">
@@ -95,38 +96,38 @@
 				<div class="date">
 					<fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
 				</div>
-				<c:forEach items="${comments}" var="comment">
-					<c:if test="${comment.messageId == message.id}">
-						<div style="margin-left:30px;">${comment.name} @${comment.account}
-						<br />
-						<pre>${comment.text}</pre>
-						</div>
-					</c:if>
-				</c:forEach>
-
-
-				<c:if test="${ not empty loginUser }">
-	            	<c:if test="${loginUser.id != message.userId }">
-	            		<form action="comment" method="post">
-	            		<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
-	            		<br />
-	            		<input type="hidden" name="messageId" value="${message.id}">
-	            		<input type="hidden" name="userId" value="${loginUser.id }">
-	            		<input type="submit" value="返信">（140文字まで
-	            		</form>
-	            	</c:if>
-            	</c:if>
 
 				<c:if test="${loginUser.id == message.userId }">
-					<form action="deleteMessage" method="post">
-						<input type="hidden" name="id" value="${message.id}">
-						<input type="submit" value="削除">
-					</form>
 					<form action="edit" method="get">
 						<input type="hidden" name="messageId" value="${message.id}">
 						<input type="submit" value="編集">
 					</form>
+					<form action="deleteMessage" method="post">
+						<input type="hidden" name="id" value="${message.id}">
+						<input type="submit" value="削除">
+					</form>
 				</c:if>
+
+				<c:forEach items="${comments}" var="comment">
+					<c:if test="${comment.messageId == message.id}">
+						<div style="margin-left:30px;">${comment.name} @${comment.account}
+							<br />
+							<pre>${comment.text}</pre>
+							<fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
+						</div>
+					</c:if>
+				</c:forEach>
+
+				<c:if test="${ not empty loginUser }">
+					<form action="comment" method="post">
+						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+						<br />
+						<input type="hidden" name="messageId" value="${message.id}">
+						<input type="hidden" name="userId" value="${loginUser.id }">
+						<input type="submit" value="返信">（140文字まで)
+					</form>
+				</c:if>
+
 			</div>
 	    </c:forEach>
 	</div>
