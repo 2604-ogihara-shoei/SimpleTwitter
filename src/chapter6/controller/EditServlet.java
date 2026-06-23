@@ -85,10 +85,10 @@ public class EditServlet extends HttpServlet {
 		message.setText(text);
 
         if (!isValid(text, errorMessages)) {
-		request.setAttribute("errorMessages", errorMessages);
-		request.setAttribute("message", message);
-		request.getRequestDispatcher("edit.jsp").forward(request, response);
-		return;
+			request.setAttribute("errorMessages", errorMessages);
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("edit.jsp").forward(request, response);
+			return;
         }
 
 		new MessageService().update(message);
@@ -102,14 +102,14 @@ public class EditServlet extends HttpServlet {
       " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 	  if (StringUtils.isBlank(text)) {
-	      errorMessages.add("入力してください");
+		  errorMessages.add("入力してください");
 	  } else if (140 < text.length()) {
-	      errorMessages.add("140文字以下で入力してください");
+		  errorMessages.add("140文字以下で入力してください");
       }
 
       if (errorMessages.size() != 0) {
-          return false;
+    	  return false;
       }
       return true;
-	}
+    }
 }

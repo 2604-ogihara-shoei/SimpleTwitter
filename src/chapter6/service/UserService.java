@@ -76,11 +76,11 @@ public class UserService {
 			commit(connection);
     	} catch (RuntimeException e) {
     		rollback(connection);
-		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+    		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
 			throw e;
     	} catch (Error e) {
     		rollback(connection);
-		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+    		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
 			throw e;
     	} finally {
     		close(connection);
@@ -149,8 +149,8 @@ public class UserService {
 			connection = getConnection();
 			User user = new UserDao().select(connection, account);
 			commit(connection);
-
 			return user;
+
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;

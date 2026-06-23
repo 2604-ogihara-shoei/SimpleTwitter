@@ -25,8 +25,8 @@ public class DeleteMessageServlet extends HttpServlet {
     * アプリケーションの初期化を実施する。
     */
     public DeleteMessageServlet() {
-        InitApplication application = InitApplication.getInstance();
-        application.init();
+		InitApplication application = InitApplication.getInstance();
+		application.init();
     }
 
     @Override

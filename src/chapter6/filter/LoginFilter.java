@@ -11,7 +11,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -25,8 +24,6 @@ public class LoginFilter implements Filter {
 				FilterChain chain) throws IOException, ServletException {
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		HttpServletResponse httpResponse = (HttpServletResponse) response;
-
 		HttpSession httpSession = httpRequest.getSession();
 
 		if (httpSession.getAttribute("loginUser") != null) {
@@ -34,8 +31,8 @@ public class LoginFilter implements Filter {
 		} else {
 			List<String> errorMessages = new ArrayList<String>();
 			errorMessages.add("ログインしてください");
-			httpSession.setAttribute("errorMessages", errorMessages);
-			httpResponse.sendRedirect("./login.jsp");
+			request.setAttribute("errorMessages", errorMessages);
+			request.getRequestDispatcher("./login.jsp").forward(request, response);
 		}
 	}
 		@Override
@@ -44,6 +41,5 @@ public class LoginFilter implements Filter {
 		@Override
 		public void destroy() {
 		}
-
 }
 

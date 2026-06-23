@@ -21,62 +21,62 @@ import chapter6.service.CommentService;
 @WebServlet(urlPatterns = { "/comment" })
 public class CommentServlet extends HttpServlet {
 	/**
-	    * ロガーインスタンスの生成
-	    */
-	    Logger log = Logger.getLogger("twitter");
+    * ロガーインスタンスの生成
+    */
+    Logger log = Logger.getLogger("twitter");
 
-	    /**
-	    * デフォルトコンストラクタ
-	    * アプリケーションの初期化を実施する。
-	    */
-	    public CommentServlet() {
-	        InitApplication application = InitApplication.getInstance();
-	        application.init();
-	    }
+    /**
+    * デフォルトコンストラクタ
+    * アプリケーションの初期化を実施する。
+    */
+    public CommentServlet() {
+        InitApplication application = InitApplication.getInstance();
+        application.init();
+    }
 
-	    @Override
-	    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws IOException, ServletException {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws IOException, ServletException {
 
-			log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-			HttpSession session = request.getSession();
-			List<String> errorMessages = new ArrayList<String>();
-			int messageId = Integer.parseInt(request.getParameter("messageId"));
-			String text = request.getParameter("text");
-			int userId = Integer.parseInt(request.getParameter("userId"));
+		HttpSession session = request.getSession();
+		List<String> errorMessages = new ArrayList<String>();
+		int messageId = Integer.parseInt(request.getParameter("messageId"));
+		String text = request.getParameter("text");
+		int userId = Integer.parseInt(request.getParameter("userId"));
 
-			if (!isValid(text, errorMessages)) {
-	            session.setAttribute("errorMessages", errorMessages);
-	            response.sendRedirect("./");
-	            return;
-	        }
-
-			Comment comment = new Comment();
-			comment.setMessageId(messageId);
-			comment.setText(text);
-			comment.setUserId(userId);
-
-			new CommentService().insert(comment);
+		if (!isValid(text, errorMessages)) {
+			session.setAttribute("errorMessages", errorMessages);
 			response.sendRedirect("./");
-	    }
+			return;
+		}
+
+		Comment comment = new Comment();
+		comment.setMessageId(messageId);
+		comment.setText(text);
+		comment.setUserId(userId);
+
+		new CommentService().insert(comment);
+		response.sendRedirect("./");
+    }
 
 
-	    private boolean isValid(String text, List<String> errorMessages) {
+    private boolean isValid(String text, List<String> errorMessages) {
 
-	  	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-	          " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-	          if (StringUtils.isBlank(text)) {
-	              errorMessages.add("メッセージを入力してください");
-	          } else if (140 < text.length()) {
-	              errorMessages.add("140文字以下で入力してください");
-	          }
+		if (StringUtils.isBlank(text)) {
+			errorMessages.add("メッセージを入力してください");
+		} else if (140 < text.length()) {
+			errorMessages.add("140文字以下で入力してください");
+		}
 
-	          if (errorMessages.size() != 0) {
-	              return false;
-	          }
-	          return true;
-	      }
+		if (errorMessages.size() != 0) {
+			return false;
+		}
+		return true;
+	}
 }

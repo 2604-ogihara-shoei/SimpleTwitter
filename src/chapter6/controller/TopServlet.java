@@ -30,8 +30,8 @@ public class TopServlet extends HttpServlet {
 	* アプリケーションの初期化を実施する。
 	*/
 	public TopServlet() {
-	    InitApplication application = InitApplication.getInstance();
-	    application.init();
+		InitApplication application = InitApplication.getInstance();
+		application.init();
 	}
 
 
